@@ -1,7 +1,9 @@
 # class BinaryTree
 from Node import *
 
-class BinaryTree():
+class BinaryTree:
+
+
     def __init__(self, root):
         self.__Root = root
 
@@ -11,7 +13,6 @@ class BinaryTree():
     def isRoot(self, node):
         return node == self.__Root
 
-    #code prof parce que j'avais pas compris la définition de tailleet cherchais à compter les niveaux de l'arbre plutotque les noeuds
     def size(self, node):
         if node is None:
             return 0
@@ -50,8 +51,29 @@ class BinaryTree():
         else:
             return max((str(self.height(node.getLeft(), s+1)) + " " + str(self.height(node.getRight(), s+1))).split())
 
+    def belongs(self, node, val):
+        if node is None:
+            return 0
+        elif node.getVal() == val and self.isRoot(node):
+            return True
+        elif node.getVal() == val:
+            return 1
+        else:
+            return (self.belongs(node.getLeft(), val) + self.belongs(node.getRight(), val)) > 0
 
+    def ancestors(self, node, val):
+        if node == None:
+            return ""
+        #elif node.getVal() == val:
+        #   return str(node.getVal())
+        else:
+            return str(node.getVal()) + " " + self.ancestors(node.getLeft(), val) + " " + self.ancestors(node.getRight(), val)
 
+    def infixe(self, node):
+        if node == None:
+            return ""
+        else:
+            return str(node.getVal()) + " " + str(self.infixe(node.getLeft())) + " " + str(self.infixe(node.getRight()))
 
 
 
@@ -85,3 +107,6 @@ print(BT.sumValues(BT.getRoot()))
 print(BT.numberLeaves(BT.getRoot()))
 print(BT.numberInternalNodes(BT.getRoot()))
 print(BT.height(BT.getRoot()))
+print(BT.belongs(BT.getRoot(), 12))
+print(BT.ancestors(BT.getRoot(), 4))
+print(BT.infixe(BT.getRoot()))
